@@ -65,9 +65,10 @@ def recursive_list(dir_name, command=None, indents=None, tree=None):
             if output_items[-1] == '':
                 output_items = output_items[:-1]
             for item in output_items:
+                item = unicode(item, encoding='UTF-8')
                 print(prefixed(quoted(item), indents=indents_subcomment))
 
-    dir_list = [os.path.join(dir_name, u'{}'.format(item))
+    dir_list = [os.path.join(dir_name, item)
                 for item in os.listdir(dir_name)]
 
     dir_list_filtered = [os.path.normpath(item)
@@ -100,7 +101,7 @@ def main():
                         help='Shell command to execute on every directory.')
 
     args = parser.parse_args()
-    root = os.path.abspath(u'{}'.format(args.root))
+    root = os.path.abspath(unicode(args.root, encoding='UTF-8'))
 
     recursive_list(root, command=args.command, tree=IndentItem.DirRoot)
 
