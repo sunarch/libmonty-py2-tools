@@ -68,8 +68,11 @@ def recursive_list(dir_name, command=None, indents=None, tree=None):
                 item = unicode(item, encoding='UTF-8')
                 print(prefixed(quoted(item), indents=indents_subcomment))
 
-    dir_list = [os.path.join(dir_name, item)
-                for item in os.listdir(dir_name)]
+    try:
+        dir_list = [os.path.join(dir_name, item)
+                    for item in os.listdir(dir_name)]
+    except OSError:
+        return
 
     dir_list_filtered = [os.path.normpath(item)
                          for item in dir_list
